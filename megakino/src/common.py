@@ -10,13 +10,14 @@ from fake_useragent import UserAgent
 from .search import search_for_movie
 
 REDIRECT_PATTERN = re.compile(r"window\.location\.href\s*=\s*'(https://[^/]+/e/\w+)';")
+BASE_URL = "https://megakino.lol"
 
 
 def get_html_from_search():
     url = search_for_movie()
     session = requests.Session()
     try:
-        session.get(f"https://megakino.ms/index.php?yg=token", timeout=15)
+        session.get(f"{BASE_URL}/index.php?yg=token", timeout=15)
         response = session.get(url, timeout=15)
         response.raise_for_status()
     except requests.RequestException as e:
