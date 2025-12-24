@@ -7,13 +7,13 @@ import requests
 
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-from .search import search_for_movie
 
 REDIRECT_PATTERN = re.compile(r"window\.location\.href\s*=\s*'(https://[^/]+/e/\w+)';")
 BASE_URL = "https://megakino.lol"
 
 
 def get_html_from_search():
+    from .search import search_for_movie
     url = search_for_movie()
     session = requests.Session()
     try:
