@@ -9,7 +9,17 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
 REDIRECT_PATTERN = re.compile(r"window\.location\.href\s*=\s*'(https://[^/]+/e/\w+)';")
-BASE_URL = "https://megakino.lol"
+
+
+def get_latest_domain():
+    try:
+        response = requests.get("https://raw.githubusercontent.com/Yezun-hikari/new-domain-check/refs/heads/main/monitors/megakino/domain.txt", timeout=15)
+        response.raise_for_status()
+        return f"https://{response.text.strip()}"
+    except requests.RequestException:
+        return "https://megakino.lol"
+
+BASE_URL = get_latest_domain()
 
 
 def get_html_from_search():
